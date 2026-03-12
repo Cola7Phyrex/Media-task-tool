@@ -1,0 +1,258 @@
+// 工具管理器
+const toolManager = {
+
+    // 打开提示词模板1
+    openPromptTemplate1() {
+        const modal = document.getElementById('prompt-template1-modal');
+        modal.classList.add('active');
+        this.setupSlotInputs(1);
+    },
+
+    // 关闭提示词模板1
+    closePromptTemplate1() {
+        const modal = document.getElementById('prompt-template1-modal');
+        modal.classList.remove('active');
+        this.resetPromptTemplate(1);
+    },
+
+    // 打开提示词模板2
+    openPromptTemplate2() {
+        const modal = document.getElementById('prompt-template2-modal');
+        modal.classList.add('active');
+        this.setupSlotInputs(2);
+    },
+
+    // 关闭提示词模板2
+    closePromptTemplate2() {
+        const modal = document.getElementById('prompt-template2-modal');
+        modal.classList.remove('active');
+        this.resetPromptTemplate(2);
+    },
+
+    // 打开提示词模板3
+    openPromptTemplate3() {
+        const modal = document.getElementById('prompt-template3-modal');
+        modal.classList.add('active');
+        this.setupSlotInputs(3);
+    },
+
+    // 关闭提示词模板3
+    closePromptTemplate3() {
+        const modal = document.getElementById('prompt-template3-modal');
+        modal.classList.remove('active');
+        this.resetPromptTemplate(3);
+    },
+
+    // 打开提示词模板4
+    openPromptTemplate4() {
+        const modal = document.getElementById('prompt-template4-modal');
+        modal.classList.add('active');
+        this.setupSlotInputs(4);
+    },
+
+    // 关闭提示词模板4
+    closePromptTemplate4() {
+        const modal = document.getElementById('prompt-template4-modal');
+        modal.classList.remove('active');
+        this.resetPromptTemplate(4);
+    },
+
+    // 打开提示词模板5
+    openPromptTemplate5() {
+        const modal = document.getElementById('prompt-template5-modal');
+        modal.classList.add('active');
+        this.setupSlotInputs(5);
+    },
+
+    // 关闭提示词模板5
+    closePromptTemplate5() {
+        const modal = document.getElementById('prompt-template5-modal');
+        modal.classList.remove('active');
+        this.resetPromptTemplate(5);
+    },
+
+    // 设置输入框事件监听
+    setupSlotInputs(templateNum) {
+        const modal = document.getElementById(`prompt-template${templateNum}-modal`);
+        const inputs = modal.querySelectorAll('.slot-input');
+        inputs.forEach(input => {
+            const newInput = input.cloneNode(true);
+            input.parentNode.replaceChild(newInput, input);
+            
+            newInput.addEventListener('input', (e) => {
+                const target = e.target.dataset.target;
+                const value = e.target.value;
+                this.updateSlot(target, value);
+            });
+        });
+        
+        const slots = modal.querySelectorAll('.prompt-slot');
+        slots.forEach(slot => {
+            const newSlot = slot.cloneNode(true);
+            slot.parentNode.replaceChild(newSlot, slot);
+            
+            newSlot.addEventListener('input', (e) => {
+                const slotName = e.target.dataset.slot;
+                const value = e.target.textContent;
+                const input = modal.querySelector(`.slot-input[data-target="${slotName}"]`);
+                if (input) {
+                    input.value = value;
+                }
+            });
+        });
+    },
+
+    // 更新挖空内容
+    updateSlot(slotName, value) {
+        const slot = document.querySelector(`.prompt-slot[data-slot="${slotName}"]`);
+        if (slot) {
+            slot.textContent = value || '';
+        }
+    },
+
+    // 获取单个挖空值
+    getSlotValue(slotName) {
+        const slot = document.querySelector(`.prompt-slot[data-slot="${slotName}"]`);
+        return slot ? slot.textContent.trim() : '';
+    },
+
+    // 重置提示词模板
+    resetPromptTemplate(templateNum) {
+        const modal = document.getElementById(`prompt-template${templateNum}-modal`);
+        const inputs = modal.querySelectorAll('.slot-input');
+        inputs.forEach(input => {
+            const defaultValue = input.getAttribute('value') || '';
+            input.value = defaultValue;
+        });
+        
+        const defaults = {
+            1: {
+                'year': '2026', 'month': 'x', 'day': 'x', 'event_type': '比赛', 'location': 'xx',
+                'schedule_type': 'xxx赛程', 'info_type': '成绩/比赛细节', 'count': 'x', 'keyword': 'xx',
+                'url': 'https://www.formula1.com/en/results/2026/races/1279/australia/practice/1'
+            },
+            2: {
+                'year2': 'xxxx', 'month2': 'xx', 'day2': 'xx', 'event2': '赛事', 'schedule2': '赛程',
+                'count2': '30', 'aspects2': 'xxxx', 'keyword2': 'xxx'
+            },
+            3: {
+                'year3': 'xxxx', 'month3': 'xx', 'day3': 'xx', 'event3': '赛事', 'schedule3': '赛程',
+                'wordcount3': '字数', 'title3': 'xxx', 'direction3': '内容方向', 'style3': '文案模版'
+            },
+            4: {
+                'routes4': '线路list'
+            },
+            5: {
+                'count5': '30', 'theme5': '卡丁车', 'aspects5': '山路驾驶安全规则、雨天/雾天山路行车注意事项、跑山前的车辆必备检查项',
+                'type5': '汽车', 'exclude5': '卡丁车'
+            }
+        };
+        
+        const defaultSlots = defaults[templateNum] || {};
+        Object.keys(defaultSlots).forEach(slotName => {
+            const slot = modal.querySelector(`.prompt-slot[data-slot="${slotName}"]`);
+            if (slot) {
+                slot.textContent = defaultSlots[slotName];
+            }
+        });
+        
+        const resultDiv = modal.querySelector('.prompt-result');
+        if (resultDiv) {
+            resultDiv.style.display = 'none';
+        }
+    },
+
+    // 复制提示词模板1
+    copyPromptTemplate1() {
+        const year = this.getSlotValue('year');
+        const month = this.getSlotValue('month');
+        const day = this.getSlotValue('day');
+        const eventType = this.getSlotValue('event_type');
+        const location = this.getSlotValue('location');
+        const scheduleType = this.getSlotValue('schedule_type');
+        const infoType = this.getSlotValue('info_type');
+        const count = this.getSlotValue('count');
+        const keyword = this.getSlotValue('keyword');
+        const url = this.getSlotValue('url');
+        
+        const text = `帮我在这个网站搜索下${year}年${month}月${day}日 ${eventType} ${location}站 ${scheduleType}的${infoType}, 根据结果给出${count}个非常吸睛的短视频标题, 要求30字以内, 必须包含字段${keyword}, 一定要多来源搜索并核实.\n参考网站: ${url}`;
+        
+        this.copyToClipboard(text, 1);
+    },
+
+    // 复制提示词模板2
+    copyPromptTemplate2() {
+        const year = this.getSlotValue('year2');
+        const month = this.getSlotValue('month2');
+        const day = this.getSlotValue('day2');
+        const event = this.getSlotValue('event2');
+        const schedule = this.getSlotValue('schedule2');
+        const count = this.getSlotValue('count2');
+        const aspects = this.getSlotValue('aspects2');
+        const keyword = this.getSlotValue('keyword2');
+        
+        const text = `帮我搜索下即将在${year}年${month}月${day}日开赛的${event} ${schedule}站, 一定要二次核对赛事的准确信息, 并构思${count}个非常吸睛的短视频标题, 可以从${aspects}等方面撰写. 每个标题字数小于30字, 且必须包含文字${keyword}.`;
+        
+        this.copyToClipboard(text, 2);
+    },
+
+    // 复制提示词模板3
+    copyPromptTemplate3() {
+        const year = this.getSlotValue('year3');
+        const month = this.getSlotValue('month3');
+        const day = this.getSlotValue('day3');
+        const event = this.getSlotValue('event3');
+        const schedule = this.getSlotValue('schedule3');
+        const wordcount = this.getSlotValue('wordcount3');
+        const title = this.getSlotValue('title3');
+        const direction = this.getSlotValue('direction3');
+        const style = this.getSlotValue('style3');
+        
+        const text = `搜索下${year}年${month}月${day}日开赛的${event} ${schedule}站, 帮我写一篇不少于 ${wordcount} 字的短视频文案口播稿，要纯自然文字，不要序号或特殊符号。视频标题为${title}，写下${direction}。文字要自然像人们正常说话介绍主题，用词不浮夸，有数据干货，一定要核实信息！只需要写口播文案, 不需要额外的配音和画面提示,  不要「当儿童组小车手在T18弯道超车时，他们或许正踩下中国赛车未来的第一脚油门」等空话，语言风格可以参考以下内容：${style}`;
+        
+        this.copyToClipboard(text, 3);
+    },
+
+    // 复制提示词模板4
+    copyPromptTemplate4() {
+        const routes = this.getSlotValue('routes4');
+        
+        const text = `帮我把下列跑山/越野线路改写为短视频标题, 可以是(某地)跑山/越野必打卡+线路名、(某地)经典线路+线路名、线路名+跑山/越野指南. 完全按我给你的顺序输出, 不需要加序号, 每行之间不需要空格. 每一个标题的前面如果有了(某地)名称, 写路线时就不需要再重复一次(某地)名, 同理路线两个字也是, 一个标题中不要重复出现, 每个标题字数小于30字, 以下是线路列表${routes}`;
+        
+        this.copyToClipboard(text, 4);
+    },
+
+    // 复制提示词模板5
+    copyPromptTemplate5() {
+        const count = this.getSlotValue('count5');
+        const theme = this.getSlotValue('theme5');
+        const aspects = this.getSlotValue('aspects5');
+        const type = this.getSlotValue('type5');
+        const exclude = this.getSlotValue('exclude5');
+        
+        const text = `帮我构思${count}条吸睛又有悬念的短视频标题, 主要聚焦于${theme}主题. 可以从${aspects}等多方面构思. 注意是${type}, 不要涉及${exclude}.`;
+        
+        this.copyToClipboard(text, 5);
+    },
+
+    // 复制到剪贴板
+    copyToClipboard(text, templateNum) {
+        const modal = document.getElementById(`prompt-template${templateNum}-modal`);
+        const resultDiv = modal.querySelector('.prompt-result');
+        const finalTextDiv = modal.querySelector('.prompt-final-text');
+        finalTextDiv.textContent = text;
+        resultDiv.style.display = 'block';
+        
+        navigator.clipboard.writeText(text).then(() => {
+            dataManager.showToast('提示词已复制到剪贴板');
+        }).catch(() => {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            dataManager.showToast('提示词已复制到剪贴板');
+        });
+    }
+};

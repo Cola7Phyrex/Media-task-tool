@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <title>自媒体工作室管理</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 底部导航 -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-page="people">
+                <span class="nav-icon">👥</span>
+                <span class="nav-label">人员</span>
+            </button>
+            <button class="nav-item" data-page="projects">
+                <span class="nav-icon">📁</span>
+                <span class="nav-label">项目</span>
+            </button>
+            <button class="nav-item" data-page="tasks">
+                <span class="nav-icon">✓</span>
+                <span class="nav-label">任务</span>
+            </button>
+            <button class="nav-item" data-page="tools">
+                <span class="nav-icon">🛠</span>
+                <span class="nav-label">工具</span>
+            </button>
+        </nav>
+
+        <!-- 页面容器 -->
+        <main class="main-content">
+            <!-- 人员管理页面 -->
+            <section id="people-page" class="page active">
+                <header class="page-header">
+                    <h1>人员管理</h1>
+                    <button class="btn-primary" onclick="peopleManager.openModal()">+ 添加成员</button>
+                </header>
+                <div class="data-actions-bar" style="display: flex; gap: 8px; margin-bottom: 16px;">
+                    <button class="btn-secondary" onclick="dataManager.exportData()" style="flex: 1;">💾 导出数据</button>
+                    <button class="btn-secondary" onclick="dataManager.importData()" style="flex: 1;">📂 导入数据</button>
+                    <input type="file" id="import-file" accept=".json" style="display:none" onchange="dataManager.handleImport(event)">
+                </div>
+                <div id="people-list" class="card-list"></div>
+            </section>
+
+            <!-- 项目管理页面 -->
+            <section id="projects-page" class="page">
+                <header class="page-header">
+                    <h1>项目管理</h1>
+                    <button class="btn-primary" onclick="projectManager.openModal()">+ 新建项目</button>
+                </header>
+                <div class="search-bar">
+                    <input type="text" id="project-search" placeholder="搜索项目..." oninput="projectManager.search(this.value)">
+                </div>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">全部</button>
+                    <button class="filter-tab" data-filter="ongoing">进行中</button>
+                    <button class="filter-tab" data-filter="completed">已完成</button>
+                </div>
+                <div id="projects-list" class="card-list"></div>
+            </section>
+
+            <!-- 任务管理页面 -->
+            <section id="tasks-page" class="page">
+                <header class="page-header">
+                    <h1>任务管理</h1>
+                    <button class="btn-primary" onclick="taskManager.openModal()">+ 新建任务</button>
+                </header>
+                <div class="search-bar">
+                    <input type="text" id="task-search" placeholder="搜索任务..." oninput="taskManager.search(this.value)">
+                </div>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">全部</button>
+                    <button class="filter-tab" data-filter="todo">待办</button>
+                    <button class="filter-tab" data-filter="doing">进行中</button>
+                    <button class="filter-tab" data-filter="done">已完成</button>
+                </div>
+                <div id="tasks-list" class="card-list"></div>
+            </section>
+
+            <!-- 工具页面 -->
+            <section id="tools-page" class="page">
+                <header class="page-header">
+                    <h1>提示词工具</h1>
+                </header>
+                <div class="tools-grid">
+                    <div class="tool-card" onclick="toolManager.openPromptTemplate1()">
+                        <div class="tool-icon">🎯</div>
+                        <h3>视频标题+指定信息源</h3>
+                        <p>根据指定网站搜索生成标题</p>
+                    </div>
+                    <div class="tool-card" onclick="toolManager.openPromptTemplate2()">
+                        <div class="tool-icon">🏁</div>
+                        <h3>赛事视频标题</h3>
+                        <p>搜索赛事信息生成标题</p>
+                    </div>
+                    <div class="tool-card" onclick="toolManager.openPromptTemplate3()">
+                        <div class="tool-icon">📝</div>
+                        <h3>赛事视频文案</h3>
+                        <p>生成自然口播文案</p>
+                    </div>
+                    <div class="tool-card" onclick="toolManager.openPromptTemplate4()">
+                        <div class="tool-icon">🛤</div>
+                        <h3>线路标题改写</h3>
+                        <p>跑山/越野线路标题</p>
+                    </div>
+                    <div class="tool-card" onclick="toolManager.openPromptTemplate5()">
+                        <div class="tool-icon">🚗</div>
+                        <h3>玩车系标题</h3>
+                        <p>汽车主题吸睛标题</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 项目模态框 -->
+        <div id="project-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="project-modal-title">新建项目</h2>
+                    <button class="close-btn" onclick="projectManager.closeModal()">×</button>
+                </div>
+                <form id="project-form" onsubmit="projectManager.save(event)">
+                    <input type="hidden" id="project-id">
+                    <div class="form-group">
+                        <label>项目名称 *</label>
+                        <input type="text" id="project-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>甲方/客户</label>
+                        <input type="text" id="project-client" placeholder="选填">
+                    </div>
+                    
+                    <!-- 时间 -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>开始日期</label>
+                            <input type="date" id="project-start">
+                        </div>
+                        <div class="form-group">
+                            <label>截止日期</label>
+                            <input type="date" id="project-end">
+                        </div>
+                    </div>
+                    
+                    <!-- 内容报价 - 可动态增删 -->
+                    <div class="form-group">
+                        <label>内容报价</label>
+                        <div id="content-prices-list">
+                            <!-- 动态添加的报价行 -->
+                        </div>
+                        <button type="button" class="btn-secondary btn-full" onclick="projectManager.addContentPrice()" style="margin-top: 8px;">+ 添加报价</button>
+                    </div>
+                    
+                    <!-- 结算方式 -->
+                    <div class="form-group">
+                        <label>结算方式</label>
+                        <select id="project-payment">
+                            <option value="">请选择</option>
+                            <option value="content_account">内容发布账号</option>
+                            <option value="any_account">任意账号</option>
+                            <option value="company">对公结算</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+                    
+                    <!-- 结算标准 -->
+                    <div class="form-group">
+                        <label>结算标准</label>
+                        <div class="checkbox-group" style="margin-bottom: 8px;">
+                            <label class="checkbox-label" style="display: inline-flex; align-items: center; margin-right: 16px; cursor: pointer;">
+                                <input type="checkbox" id="payment-std-recommend" value="推荐" style="width: auto; margin-right: 6px;">
+                                <span>推荐</span>
+                            </label>
+                            <label class="checkbox-label" style="display: inline-flex; align-items: center; margin-right: 16px; cursor: pointer;">
+                                <input type="checkbox" id="payment-std-quality" value="优质" style="width: auto; margin-right: 6px;">
+                                <span>优质</span>
+                            </label>
+                            <label class="checkbox-label" style="display: inline-flex; align-items: center; cursor: pointer;">
+                                <input type="checkbox" id="payment-std-manual" value="人工" style="width: auto; margin-right: 6px;">
+                                <span>人工</span>
+                            </label>
+                        </div>
+                        <textarea id="project-payment-terms" rows="2" placeholder="其他结算标准说明"></textarea>
+                    </div>
+                    
+                    <!-- 账号要求 -->
+                    <div class="form-group">
+                        <label>形式要求</label>
+                        <select id="project-form-req">
+                            <option value="">请选择</option>
+                            <option value="真人出镜">真人出镜</option>
+                            <option value="真人配音">真人配音</option>
+                            <option value="二创剪辑">二创剪辑</option>
+                            <option value="实地拍摄">实地拍摄</option>
+                            <option value="实车拍摄">实车拍摄</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+                    
+                    <!-- 内容规格 -->
+                    <div class="form-group">
+                        <label>内容规格</label>
+                        <div class="form-row-three" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                            <input type="text" id="project-content-length" placeholder="内容长度">
+                            <select id="project-video-format">
+                                <option value="">视频格式</option>
+                                <option value="横版">横版</option>
+                                <option value="竖版">竖版</option>
+                                <option value="其他">其他</option>
+                            </select>
+                            <input type="text" id="project-cover-req" placeholder="封面要求">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>质量要求</label>
+                        <input type="text" id="project-quality-req" placeholder="自定义质量要求">
+                    </div>
+                    <div class="form-group">
+                        <label>账号数量相关</label>
+                        <div class="form-row-three" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                            <div>
+                                <input type="number" id="project-account-count" placeholder="账号数量要求" min="0">
+                            </div>
+                            <div>
+                                <input type="number" id="project-single-limit" placeholder="单账号发布上限" min="0">
+                            </div>
+                            <div>
+                                <input type="number" id="project-daily-limit" placeholder="单日发布上限" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 发布要求 -->
+                    <div class="form-group">
+                        <label>活动链接</label>
+                        <input type="url" id="project-activity-link" placeholder="https://..." style="font-size: 14px;">
+                    </div>
+                    <div class="form-group">
+                        <label>其他发布要求</label>
+                        <textarea id="project-publish-req" rows="2" placeholder="例如：保留7天，置顶"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>项目备注</label>
+                        <textarea id="project-notes" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>项目状态</label>
+                        <select id="project-status">
+                            <option value="ongoing">进行中</option>
+                            <option value="completed">已完成</option>
+                            <option value="cancelled">已取消</option>
+                        </select>
+                    </div>
+                    <!-- 智能识别栏 -->
+                    <div class="form-group" style="border-top: 1px solid var(--border-color); padding-top: 16px; margin-top: 16px;">
+                        <label>🤖 智能识别 <span style="font-size: 12px; color: var(--text-secondary);">粘贴整段文字自动填充字段</span></label>
+                        <textarea id="project-smart-parse" rows="4" placeholder="粘贴合作邀约文字..." onpaste="projectManager.handleSmartParse(event)"></textarea>
+                        <button type="button" class="btn-secondary btn-full" onclick="projectManager.smartParse()" style="margin-top: 8px;">🔍 识别并填充</button>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" onclick="projectManager.closeModal()">取消</button>
+                        <button type="button" id="project-delete-btn" class="btn-secondary" onclick="projectManager.deleteCurrent()" style="display: none; background: rgba(255, 59, 48, 0.2); color: var(--danger); border-color: var(--danger);">删除</button>
+                        <button type="submit" class="btn-primary">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 任务模态框 -->
+        <div id="task-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="task-modal-title">新建任务</h2>
+                    <button class="close-btn" onclick="taskManager.closeModal()">×</button>
+                </div>
+                <form id="task-form" onsubmit="taskManager.save(event)">
+                    <input type="hidden" id="task-id">
+                    
+                    <!-- 基本信息 -->
+                    <div class="form-group">
+                        <label>任务名称 *</label>
+                        <input type="text" id="task-name" required placeholder="输入任务名称">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>关联项目</label>
+                        <select id="task-project" onchange="taskManager.onProjectChange(this.value)">
+                            <option value="">不关联项目（手动填写）</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>执行人员</label>
+                        <select id="task-assignee">
+                            <option value="">选择执行人员</option>
+                        </select>
+                    </div>
+                    
+                    <!-- 时间信息 -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>开始时间</label>
+                            <input type="date" id="task-start">
+                        </div>
+                        <div class="form-group">
+                            <label>截止时间</label>
+                            <input type="date" id="task-end">
+                        </div>
+                    </div>
+                    
+                    <!-- 内容规格 -->
+                    <div class="form-group">
+                        <label>形式要求</label>
+                        <select id="task-form-req">
+                            <option value="">请选择</option>
+                            <option value="真人出镜">真人出镜</option>
+                            <option value="真人配音">真人配音</option>
+                            <option value="二创剪辑">二创剪辑</option>
+                            <option value="实地拍摄">实地拍摄</option>
+                            <option value="实车拍摄">实车拍摄</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>内容规格</label>
+                        <div class="form-row-three" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                            <input type="text" id="task-content-length" placeholder="内容长度">
+                            <select id="task-video-format">
+                                <option value="">视频格式</option>
+                                <option value="横版">横版</option>
+                                <option value="竖版">竖版</option>
+                                <option value="其他">其他</option>
+                            </select>
+                            <input type="text" id="task-cover-req" placeholder="封面要求">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>质量要求</label>
+                        <textarea id="task-quality-req" rows="2" placeholder="自定义质量要求"></textarea>
+                    </div>
+                    
+                    <!-- 通用质量要求 -->
+                    <div class="form-group" style="border-top: 1px solid var(--border-color); padding-top: 16px; margin-top: 16px;">
+                        <label>通用质量要求</label>
+                        <div class="checkbox-list" style="display: flex; flex-direction: column; gap: 10px;">
+                            <label class="checkbox-label" style="display: flex; align-items: flex-start; cursor: pointer;">
+                                <input type="checkbox" id="quality-watermark" value="素材不能出现水印、品牌logo、真人人脸等敏感信息" style="width: auto; margin-right: 10px; margin-top: 3px;">
+                                <span style="font-size: 14px; line-height: 1.4;">素材不能出现水印、品牌logo、真人人脸等敏感信息</span>
+                            </label>
+                            <label class="checkbox-label" style="display: flex; align-items: flex-start; cursor: pointer;">
+                                <input type="checkbox" id="quality-match" value="文案与画面完全对应" style="width: auto; margin-right: 10px; margin-top: 3px;">
+                                <span style="font-size: 14px; line-height: 1.4;">文案与画面完全对应</span>
+                            </label>
+                            <label class="checkbox-label" style="display: flex; align-items: flex-start; cursor: pointer;">
+                                <input type="checkbox" id="quality-car" value="封面图必须包含清晰、完整的车" style="width: auto; margin-right: 10px; margin-top: 3px;">
+                                <span style="font-size: 14px; line-height: 1.4;">封面图必须包含清晰、完整的车</span>
+                            </label>
+                            <label class="checkbox-label" style="display: flex; align-items: flex-start; cursor: pointer;">
+                                <input type="checkbox" id="quality-human" value="文案有真人感，禁止AI味" style="width: auto; margin-right: 10px; margin-top: 3px;">
+                                <span style="font-size: 14px; line-height: 1.4;">文案有真人感，禁止AI味</span>
+                            </label>
+                            <label class="checkbox-label" style="display: flex; align-items: flex-start; cursor: pointer;">
+                                <input type="checkbox" id="quality-keyword" value="需要植入关键词" style="width: auto; margin-right: 10px; margin-top: 3px;">
+                                <span style="font-size: 14px; line-height: 1.4;">需要植入关键词</span>
+                            </label>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <label class="checkbox-label" style="display: flex; align-items: center; cursor: pointer; white-space: nowrap;">
+                                    <input type="checkbox" id="quality-other-check" style="width: auto; margin-right: 6px;">
+                                    <span>其他</span>
+                                </label>
+                                <input type="text" id="quality-other-text" placeholder="补充说明" style="flex: 1; padding: 8px 12px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 14px;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 价格 -->
+                    <div class="form-group">
+                        <label>价格</label>
+                        <input type="number" id="task-price" placeholder="输入价格（元）" min="0">
+                    </div>
+                    
+                    <!-- 任务状态 -->
+                    <div class="form-group" style="border-top: 1px solid var(--border-color); padding-top: 16px; margin-top: 16px;">
+                        <label>任务状态</label>
+                        <select id="task-status">
+                            <option value="todo">待办</option>
+                            <option value="doing">进行中</option>
+                            <option value="done">已完成</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>任务备注</label>
+                        <textarea id="task-notes" rows="2" placeholder="其他备注信息"></textarea>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" onclick="taskManager.closeModal()">取消</button>
+                        <button type="button" id="task-delete-btn" class="btn-secondary" onclick="taskManager.deleteCurrent()" style="display: none; background: rgba(255, 59, 48, 0.2); color: var(--danger); border-color: var(--danger);">删除</button>
+                        <button type="submit" class="btn-primary">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 人员模态框 -->
+        <div id="people-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="people-modal-title">添加成员</h2>
+                    <button class="close-btn" onclick="peopleManager.closeModal()">×</button>
+                </div>
+                <form id="people-form" onsubmit="peopleManager.save(event)">
+                    <input type="hidden" id="people-id">
+                    <div class="form-group">
+                        <label>姓名 *</label>
+                        <input type="text" id="people-name" required placeholder="请输入姓名">
+                    </div>
+                    
+                    <!-- 内容类型/价格/产能 - 可动态增删 -->
+                    <div class="form-group">
+                        <label>内容类型与产能</label>
+                        <div id="people-capacity-list">
+                            <!-- 动态添加的产能行 -->
+                        </div>
+                        <button type="button" class="btn-secondary btn-full" onclick="peopleManager.addCapacity()" style="margin-top: 8px;">+ 添加内容类型</button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>联系方式</label>
+                        <input type="text" id="people-contact" placeholder="电话/微信">
+                    </div>
+                    <div class="form-group">
+                        <label>备注</label>
+                        <textarea id="people-notes" rows="2"></textarea>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" onclick="peopleManager.closeModal()">取消</button>
+                        <button type="button" id="people-delete-btn" class="btn-secondary" onclick="peopleManager.deleteCurrent()" style="display: none; background: rgba(255, 59, 48, 0.2); color: var(--danger); border-color: var(--danger);">删除</button>
+                        <button type="submit" class="btn-primary">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- 提示词模板1模态框 - 视频标题+指定信息源 -->
+        <div id="prompt-template1-modal" class="modal">
+            <div class="modal-content modal-large">
+                <div class="modal-header">
+                    <h2>视频标题+指定信息源</h2>
+                    <button class="close-btn" onclick="toolManager.closePromptTemplate1()">×</button>
+                </div>
+                <div class="prompt-form" style="padding: 20px;">
+                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">
+                        帮我在这个网站搜索下<span class="prompt-slot" data-slot="year" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">2026</span>年<span class="prompt-slot" data-slot="month" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">x</span>月<span class="prompt-slot" data-slot="day" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">x</span>日 <span class="prompt-slot" data-slot="event_type" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">比赛</span> <span class="prompt-slot" data-slot="location" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>站 <span class="prompt-slot" data-slot="schedule_type" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxx赛程</span>的<span class="prompt-slot" data-slot="info_type" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">成绩/比赛细节</span>, 根据结果给出<span class="prompt-slot" data-slot="count" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">x</span>个非常吸睛的短视频标题, 要求30字以内, 必须包含字段<span class="prompt-slot" data-slot="keyword" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>, 一定要多来源搜索并核实.
+参考网站: <span class="prompt-slot" data-slot="url" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none; word-break: break-all;">https://www.formula1.com/en/results/2026/races/1279/australia/practice/1</span>
+                        <button class="btn-primary" onclick="toolManager.copyPromptTemplate1()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 提示词模板2模态框 - 赛事视频标题 -->
+        <div id="prompt-template2-modal" class="modal">
+            <div class="modal-content modal-large">
+                <div class="modal-header">
+                    <h2>赛事视频标题</h2>
+                    <button class="close-btn" onclick="toolManager.closePromptTemplate2()">×</button>
+                </div>
+                <div class="prompt-form" style="padding: 20px;">
+                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">
+                        帮我搜索下即将在<span class="prompt-slot" data-slot="year2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxxx</span>年<span class="prompt-slot" data-slot="month2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>月<span class="prompt-slot" data-slot="day2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>日开赛的<span class="prompt-slot" data-slot="event2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">赛事</span> <span class="prompt-slot" data-slot="schedule2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">赛程</span>站, 一定要二次核对赛事的准确信息, 并构思<span class="prompt-slot" data-slot="count2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">30</span>个非常吸睛的短视频标题, 可以从<span class="prompt-slot" data-slot="aspects2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxxx</span>等方面撰写. 每个标题字数小于30字, 且必须包含文字<span class="prompt-slot" data-slot="keyword2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxx</span>.
+                        <button class="btn-primary" onclick="toolManager.copyPromptTemplate2()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 提示词模板3模态框 - 赛事视频文案 -->
+        <div id="prompt-template3-modal" class="modal">
+            <div class="modal-content modal-large">
+                <div class="modal-header">
+                    <h2>赛事视频文案</h2>
+                    <button class="close-btn" onclick="toolManager.closePromptTemplate3()">×</button>
+                </div>
+                <div class="prompt-form" style="padding: 20px;">
+                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">
+                        搜索下<span class="prompt-slot" data-slot="year3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxxx</span>年<span class="prompt-slot" data-slot="month3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>月<span class="prompt-slot" data-slot="day3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>日开赛的<span class="prompt-slot" data-slot="event3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">赛事</span> <span class="prompt-slot" data-slot="schedule3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">赛程</span>站, 帮我写一篇不少于 <span class="prompt-slot" data-slot="wordcount3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">字数</span> 字的短视频文案口播稿，要纯自然文字，不要序号或特殊符号。视频标题为<span class="prompt-slot" data-slot="title3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxx</span>，写下<span class="prompt-slot" data-slot="direction3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">内容方向</span>。文字要自然像人们正常说话介绍主题，用词不浮夸，有数据干货，一定要核实信息！只需要写口播文案, 不需要额外的配音和画面提示,  不要「当儿童组小车手在T18弯道超车时，他们或许正踩下中国赛车未来的第一脚油门」等空话，语言风格可以参考以下内容：<span class="prompt-slot" data-slot="style3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">文案模版</span>
+                        <button class="btn-primary" onclick="toolManager.copyPromptTemplate3()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 提示词模板4模态框 - 线路标题改写 -->
+        <div id="prompt-template4-modal" class="modal">
+            <div class="modal-content modal-large">
+                <div class="modal-header">
+                    <h2>线路标题改写</h2>
+                    <button class="close-btn" onclick="toolManager.closePromptTemplate4()">×</button>
+                </div>
+                <div class="prompt-form" style="padding: 20px;">
+                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">
+                        帮我把下列跑山/越野线路改写为短视频标题, 可以是(某地)跑山/越野必打卡+线路名、(某地)经典线路+线路名、线路名+跑山/越野指南. 完全按我给你的顺序输出, 不需要加序号, 每行之间不需要空格. 每一个标题的前面如果有了(某地)名称, 写路线时就不需要再重复一次(某地)名, 同理路线两个字也是, 一个标题中不要重复出现, 每个标题字数小于30字, 以下是线路列表<span class="prompt-slot" data-slot="routes4" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">线路list</span>
+                        <button class="btn-primary" onclick="toolManager.copyPromptTemplate4()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 提示词模板5模态框 - 玩车系标题 -->
+        <div id="prompt-template5-modal" class="modal">
+            <div class="modal-content modal-large">
+                <div class="modal-header">
+                    <h2>玩车系标题</h2>
+                    <button class="close-btn" onclick="toolManager.closePromptTemplate5()">×</button>
+                </div>
+                <div class="prompt-form" style="padding: 20px;">
+                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">
+                        帮我构思<span class="prompt-slot" data-slot="count5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">30</span>条吸睛又有悬念的短视频标题, 主要聚焦于<span class="prompt-slot" data-slot="theme5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">卡丁车</span>主题. 可以从<span class="prompt-slot" data-slot="aspects5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">山路驾驶安全规则、雨天 / 雾天山路行车注意事项、跑山前的车辆必备检查项</span>等多方面构思. 注意是<span class="prompt-slot" data-slot="type5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">汽车</span>, 不要涉及<span class="prompt-slot" data-slot="exclude5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">卡丁车</span>.
+                        <button class="btn-primary" onclick="toolManager.copyPromptTemplate5()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/projects.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/people.js"></script>
+    <script src="js/tools.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
