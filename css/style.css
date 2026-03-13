@@ -513,8 +513,6 @@ body {
     height: 48px;
     min-height: 48px;
     box-sizing: border-box;
-    -webkit-appearance: none;
-    appearance: none;
 }
 
 /* iOS 日期输入框特殊处理 */
@@ -537,6 +535,16 @@ body {
 .form-group input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
     opacity: 0.6;
+}
+
+/* 复选框样式恢复 */
+.form-group input[type="checkbox"] {
+    width: auto;
+    height: auto;
+    min-height: auto;
+    -webkit-appearance: checkbox;
+    appearance: checkbox;
+    margin-right: 6px;
 }
 
 .form-group input:focus,
