@@ -71,6 +71,34 @@ const toolManager = {
         this.resetPromptTemplate(5);
     },
 
+    // 打开提示词模板6
+    openPromptTemplate6() {
+        const modal = document.getElementById('prompt-template6-modal');
+        modal.classList.add('active');
+        this.setupSlotInputs(6);
+    },
+
+    // 关闭提示词模板6
+    closePromptTemplate6() {
+        const modal = document.getElementById('prompt-template6-modal');
+        modal.classList.remove('active');
+        this.resetPromptTemplate(6);
+    },
+
+    // 打开提示词模板7
+    openPromptTemplate7() {
+        const modal = document.getElementById('prompt-template7-modal');
+        modal.classList.add('active');
+        this.setupSlotInputs(7);
+    },
+
+    // 关闭提示词模板7
+    closePromptTemplate7() {
+        const modal = document.getElementById('prompt-template7-modal');
+        modal.classList.remove('active');
+        this.resetPromptTemplate(7);
+    },
+
     // 设置输入框事件监听
     setupSlotInputs(templateNum) {
         const modal = document.getElementById(`prompt-template${templateNum}-modal`);
@@ -145,6 +173,16 @@ const toolManager = {
             5: {
                 'count5': '30', 'theme5': '卡丁车', 'aspects5': '山路驾驶安全规则、雨天/雾天山路行车注意事项、跑山前的车辆必备检查项',
                 'type5': '汽车', 'exclude5': '卡丁车'
+            },
+            6: {
+                'count6': '10', 'price6': '15-20万、20-30万、10万以下', 'energy6': '纯电、混动、增程、纯油',
+                'body6': '轿车、SUV、跑车', 'compare6': '2款', 'minlen6': '20', 'maxlen6': '30'
+            },
+            7: {
+                'minwords7': '100', 'maxwords7': '150',
+                'hotwords7': '闭眼入、真香、劝退、种草、拉满、卷王、YYDS、破防、拿捏、上头、下头、离谱、无语、救命、谁懂啊、家人们、有一说一、懂的都懂、不吹不黑、无广、纯分享、亲测',
+                'example7': '说实话，这俩车放一块我纠结了好久。A车外观是真香，开出去回头率拉满，但内饰塑料感有点强，劝退了。B车没那么张扬，但坐进去质感拿捏住了，家用的话我闭眼入B。',
+                'titles7': '标题...'
             }
         };
         
@@ -233,6 +271,34 @@ const toolManager = {
         const text = `帮我构思${count}条吸睛又有悬念的短视频标题, 主要聚焦于${theme}主题. 可以从${aspects}等多方面构思. 注意是${type}, 不要涉及${exclude}.`;
         
         this.copyToClipboard(text, 5);
+    },
+
+    // 复制提示词模板6
+    copyPromptTemplate6() {
+        const count = this.getSlotValue('count6');
+        const price = this.getSlotValue('price6');
+        const energy = this.getSlotValue('energy6');
+        const body = this.getSlotValue('body6');
+        const compare = this.getSlotValue('compare6');
+        const minLen = this.getSlotValue('minlen6');
+        const maxLen = this.getSlotValue('maxlen6');
+        
+        const text = `你是一个小红书汽车内容创作者，擅长写爆款标题。\n请帮我生成${count}个汽车对比类标题，要求：\n【填空参数】\n- 价格区间：${price}\n- 能源类型：${energy}\n- 车身类型：${body}\n【标题要求】\n1. 每个标题对比${compare}同价格区间的车\n2. 标题要有钩子，能吸引点击（用疑问、悬念、冲突、对比等手法）\n3. 不要出现#标签\n4. 标题长度控制在${minLen}-${maxLen}字之间\n5. 风格参考：\n   - "纠结党进！Model 3和极氪007怎么选？差价2万值不值"\n   - "同事买了小米SU7，我选了特斯拉Model 3，半年后谁后悔了"\n   - "同样是20万预算，为什么有人选轿车有人选SUV"`;
+        
+        this.copyToClipboard(text, 6);
+    },
+
+    // 复制提示词模板7
+    copyPromptTemplate7() {
+        const minWords = this.getSlotValue('minwords7');
+        const maxWords = this.getSlotValue('maxwords7');
+        const hotWords = this.getSlotValue('hotwords7');
+        const example = this.getSlotValue('example7');
+        const titles = this.getSlotValue('titles7');
+        
+        const text = `你是一个小红书汽车博主，说话风格像抖音/贴吧网友，非常真人感。\n我会给你几个标题，请为每个标题写一篇对比文案。\n【写作要求】\n1. 字数：${minWords}-${maxWords}字\n2. 风格：真人感、口语化，像朋友聊天，不是营销号\n3. 可以带网络热词（如：${hotWords}等）\n4. 内容：\n   - 要有主观评价, 可以不说优点（锐评）\n   - 不要列车辆参数（马力、扭矩、零百等）\n   - 不要说"我去线下试驾了/实际体验过"，改成"我感觉/我看来/我觉得"\n5. 结构：\n   - 开头：简短引入（1-2句）\n   - 中间：对比两款车的感受（可以说A好在哪、B好在哪、或者A比B强在哪）\n   - 结尾：给购买建议（适合什么人买）\n6. 不需要加#话题标签\n【示例风格】\n"${example}"\n请根据以下标题生成文案：\n${titles}`;
+        
+        this.copyToClipboard(text, 7);
     },
 
     // 复制到剪贴板

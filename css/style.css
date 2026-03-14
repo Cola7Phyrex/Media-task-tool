@@ -425,10 +425,22 @@ body {
     border-radius: 20px 20px 0 0;
     overflow: hidden;
     animation: slideUp 0.3s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .modal-large {
     max-height: 95vh;
+}
+
+.modal-header {
+    flex-shrink: 0;
+}
+
+.prompt-form {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    flex: 1;
 }
 
 @keyframes slideUp {

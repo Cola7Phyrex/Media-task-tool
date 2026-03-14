@@ -115,6 +115,16 @@
                         <h3>玩车系标题</h3>
                         <p>汽车主题吸睛标题</p>
                     </div>
+                    <div class="tool-card" onclick="toolManager.openPromptTemplate6()">
+                        <div class="tool-icon">🆚</div>
+                        <h3>选车指南对比</h3>
+                        <p>多车对比类标题生成</p>
+                    </div>
+                    <div class="tool-card" onclick="toolManager.openPromptTemplate7()">
+                        <div class="tool-icon">✍️</div>
+                        <h3>选车指南文案</h3>
+                        <p>多车对比类文案生成</p>
+                    </div>
                 </div>
             </section>
         </main>
@@ -530,6 +540,70 @@
                     <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">
                         帮我构思<span class="prompt-slot" data-slot="count5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">30</span>条吸睛又有悬念的短视频标题, 主要聚焦于<span class="prompt-slot" data-slot="theme5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">卡丁车</span>主题. 可以从<span class="prompt-slot" data-slot="aspects5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">山路驾驶安全规则、雨天 / 雾天山路行车注意事项、跑山前的车辆必备检查项</span>等多方面构思. 注意是<span class="prompt-slot" data-slot="type5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">汽车</span>, 不要涉及<span class="prompt-slot" data-slot="exclude5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">卡丁车</span>.
                         <button class="btn-primary" onclick="toolManager.copyPromptTemplate5()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 提示词模板6模态框 - 选车指南对比 -->
+        <div id="prompt-template6-modal" class="modal">
+            <div class="modal-content modal-large">
+                <div class="modal-header">
+                    <h2>选车指南对比</h2>
+                    <button class="close-btn" onclick="toolManager.closePromptTemplate6()">×</button>
+                </div>
+                <div class="prompt-form" style="padding: 20px;">
+                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">
+你是一个小红书汽车内容创作者，擅长写爆款标题。
+请帮我生成<span class="prompt-slot" data-slot="count6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">10</span>个汽车对比类标题，要求：
+【填空参数】
+- 价格区间：<span class="prompt-slot" data-slot="price6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">15-20万、20-30万、10万以下</span>
+- 能源类型：<span class="prompt-slot" data-slot="energy6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">纯电、混动、增程、纯油</span>
+- 车身类型：<span class="prompt-slot" data-slot="body6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">轿车、SUV、跑车</span>
+【标题要求】
+1. 每个标题对比<span class="prompt-slot" data-slot="compare6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">2款</span>同价格区间的车
+2. 标题要有钩子，能吸引点击（用疑问、悬念、冲突、对比等手法）
+3. 不要出现#标签
+4. 标题长度控制在<span class="prompt-slot" data-slot="minlen6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">20</span>-<span class="prompt-slot" data-slot="maxlen6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">30</span>字之间
+5. 风格参考：
+   - "纠结党进！Model 3和极氪007怎么选？差价2万值不值"
+   - "同事买了小米SU7，我选了特斯拉Model 3，半年后谁后悔了"
+   - "同样是20万预算，为什么有人选轿车有人选SUV"
+                        <button class="btn-primary" onclick="toolManager.copyPromptTemplate6()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 提示词模板7模态框 - 选车指南文案 -->
+        <div id="prompt-template7-modal" class="modal">
+            <div class="modal-content modal-large">
+                <div class="modal-header">
+                    <h2>选车指南文案</h2>
+                    <button class="close-btn" onclick="toolManager.closePromptTemplate7()">×</button>
+                </div>
+                <div class="prompt-form" style="padding: 20px;">
+                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">
+你是一个小红书汽车博主，说话风格像抖音/贴吧网友，非常真人感。
+我会给你几个标题，请为每个标题写一篇对比文案。
+【写作要求】
+1. 字数：<span class="prompt-slot" data-slot="minwords7" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">100</span>-<span class="prompt-slot" data-slot="maxwords7" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">150</span>字
+2. 风格：真人感、口语化，像朋友聊天，不是营销号
+3. 可以带网络热词（如：<span class="prompt-slot" data-slot="hotwords7" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">闭眼入、真香、劝退、种草、拉满、卷王、YYDS、破防、拿捏、上头、下头、离谱、无语、救命、谁懂啊、家人们、有一说一、懂的都懂、不吹不黑、无广、纯分享、亲测</span>等）
+4. 内容：
+   - 要有主观评价, 可以不说优点（锐评）
+   - 不要列车辆参数（马力、扭矩、零百等）
+   - 不要说"我去线下试驾了/实际体验过"，改成"我感觉/我看来/我觉得"
+5. 结构：
+   - 开头：简短引入（1-2句）
+   - 中间：对比两款车的感受（可以说A好在哪、B好在哪、或者A比B强在哪）
+   - 结尾：给购买建议（适合什么人买）
+6. 不需要加#话题标签
+【示例风格】
+"<span class="prompt-slot" data-slot="example7" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">说实话，这俩车放一块我纠结了好久。A车外观是真香，开出去回头率拉满，但内饰塑料感有点强，劝退了。B车没那么张扬，但坐进去质感拿捏住了，家用的话我闭眼入B。</span>"
+请根据以下标题生成文案：
+<span class="prompt-slot" data-slot="titles7" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none; display: block; margin-top: 8px;">标题...</span>
+                        <button class="btn-primary" onclick="toolManager.copyPromptTemplate7()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
                     </div>
                 </div>
             </div>
