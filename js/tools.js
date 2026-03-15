@@ -283,7 +283,7 @@ const toolManager = {
         const minLen = this.getSlotValue('minlen6');
         const maxLen = this.getSlotValue('maxlen6');
         
-        const text = `你是一个小红书汽车内容创作者，擅长写爆款标题。\n请帮我生成${count}个汽车对比类标题，要求：\n【填空参数】\n- 价格区间：${price}\n- 能源类型：${energy}\n- 车身类型：${body}\n【标题要求】\n1. 每个标题对比${compare}同价格区间的车\n2. 标题要有钩子，能吸引点击（用疑问、悬念、冲突、对比等手法）\n3. 不要出现#标签\n4. 标题长度控制在${minLen}-${maxLen}字之间\n5. 风格参考：\n   - "纠结党进！Model 3和极氪007怎么选？差价2万值不值"\n   - "同事买了小米SU7，我选了特斯拉Model 3，半年后谁后悔了"\n   - "同样是20万预算，为什么有人选轿车有人选SUV"`;
+        const text = `你是一个小红书汽车内容创作者，擅长写爆款标题。\n请帮我生成${count}个汽车对比类标题，要求：\n【填空参数】\n- 价格区间：${price}\n- 能源类型：${energy}\n- 车身类型：${body}\n【标题要求】\n1. 每个标题对比${compare}同价格区间的车\n2. 标题要有钩子，能吸引点击（用疑问、悬念、冲突、对比等手法）\n3. 不要出现#标签、不要出现「线下体验」、「实测」、「试车」等关键词\n4. 标题长度控制在${minLen}-${maxLen}字之间\n5. 风格参考：\n   - "纠结党进！Model 3和极氪007怎么选？差价2万值不值"\n   - "同事买了小米SU7，我选了特斯拉Model 3，半年后谁后悔了"\n   - "同样是20万预算，为什么有人选轿车有人选SUV"`;
         
         this.copyToClipboard(text, 6);
     },
@@ -303,12 +303,6 @@ const toolManager = {
 
     // 复制到剪贴板
     copyToClipboard(text, templateNum) {
-        const modal = document.getElementById(`prompt-template${templateNum}-modal`);
-        const resultDiv = modal.querySelector('.prompt-result');
-        const finalTextDiv = modal.querySelector('.prompt-final-text');
-        finalTextDiv.textContent = text;
-        resultDiv.style.display = 'block';
-        
         navigator.clipboard.writeText(text).then(() => {
             dataManager.showToast('提示词已复制到剪贴板');
         }).catch(() => {
