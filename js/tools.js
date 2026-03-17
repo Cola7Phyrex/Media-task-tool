@@ -99,6 +99,20 @@ const toolManager = {
         this.resetPromptTemplate(7);
     },
 
+    // 打开提示词模板8
+    openPromptTemplate8() {
+        const modal = document.getElementById('prompt-template8-modal');
+        modal.classList.add('active');
+        this.setupSlotInputs(8);
+    },
+
+    // 关闭提示词模板8
+    closePromptTemplate8() {
+        const modal = document.getElementById('prompt-template8-modal');
+        modal.classList.remove('active');
+        this.resetPromptTemplate(8);
+    },
+
     // 设置输入框事件监听
     setupSlotInputs(templateNum) {
         const modal = document.getElementById(`prompt-template${templateNum}-modal`);
@@ -175,14 +189,18 @@ const toolManager = {
                 'type5': '汽车', 'exclude5': '卡丁车'
             },
             6: {
-                'count6': '10', 'price6': '15-20万、20-30万、10万以下', 'energy6': '纯电、混动、增程、纯油',
-                'body6': '轿车、SUV、跑车', 'compare6': '2款', 'minlen6': '20', 'maxlen6': '30'
+                'count6': '60', 'price6': '15-20万、20-30万、10万以下', 'energy6': '纯电、混动、增程、纯油',
+                'body6': '轿车、SUV、跑车', 'compare6': '2', 'minlen6': '15', 'maxlen6': '30'
             },
             7: {
                 'minwords7': '100', 'maxwords7': '150',
                 'hotwords7': '闭眼入、真香、劝退、种草、拉满、卷王、YYDS、破防、拿捏、上头、下头、离谱、无语、救命、谁懂啊、家人们、有一说一、懂的都懂、不吹不黑、无广、纯分享、亲测',
                 'example7': '说实话，这俩车放一块我纠结了好久。A车外观是真香，开出去回头率拉满，但内饰塑料感有点强，劝退了。B车没那么张扬，但坐进去质感拿捏住了，家用的话我闭眼入B。',
                 'titles7': '标题...'
+            },
+            8: {
+                'count8': '10', 'price8': '15-20万、20-30万、10万以下', 'energy8': '纯电、混动、增程、纯油',
+                'body8': '轿车、SUV、跑车', 'minlen8': '15', 'maxlen8': '30'
             }
         };
         
@@ -283,7 +301,7 @@ const toolManager = {
         const minLen = this.getSlotValue('minlen6');
         const maxLen = this.getSlotValue('maxlen6');
         
-        const text = `你是一个小红书汽车内容创作者，擅长写爆款标题。\n请帮我生成${count}个汽车对比类标题，要求：\n【填空参数】\n- 价格区间：${price}\n- 能源类型：${energy}\n- 车身类型：${body}\n【标题要求】\n1. 每个标题对比${compare}同价格区间的车\n2. 标题要有钩子，能吸引点击（用疑问、悬念、冲突、对比等手法）\n3. 不要出现#标签、不要出现「线下体验」、「实测」、「试车」等关键词\n4. 标题长度控制在${minLen}-${maxLen}字之间\n5. 风格参考：\n   - "纠结党进！Model 3和极氪007怎么选？差价2万值不值"\n   - "同事买了小米SU7，我选了特斯拉Model 3，半年后谁后悔了"\n   - "同样是20万预算，为什么有人选轿车有人选SUV"`;
+        const text = `你是一个小红书汽车内容创作者，擅长写爆款标题。\n请帮我生成${count}个汽车对比类标题，要求：\n【填空参数】\n- 价格区间：${price}\n- 能源类型：${energy}\n- 车身类型：${body}\n【核心要求】\n- 每个标题对比${compare}款同价格区间的车\n- 标题长度控制在${minLen}-${maxLen}字之间\n- 标题要有钩子，能吸引点击（用疑问、悬念、冲突、对比等手法）\n【禁止事项】\n- 禁止罗列参数（如轴距xxxmm、续航xxx公里、功率xxx匹）\n- 禁止使用专业导购话术（如"性价比之王"、"值得入手"、"同级标杆"）\n- 禁止出现#标签\n- 禁止出现「线下体验」、「提车」、「实测」、「试车」、「试驾」、「买车」等关键词\n【风格参考】\n   - "纠结党进！Model 3和极氪007怎么选？差价2万值不值"\n   - "同事说小米SU7，我觉得不及特斯拉Model 3"\n   - "同样是20万预算，为什么有人选轿车有人选SUV"\n【输出格式】\n直接输出标题，每行一个，无需序号`;
         
         this.copyToClipboard(text, 6);
     },
@@ -299,6 +317,20 @@ const toolManager = {
         const text = `你是一个小红书汽车博主，说话风格像抖音/贴吧网友，非常真人感。\n我会给你几个标题，请为每个标题写一篇对比文案。\n【写作要求】\n1. 字数：${minWords}-${maxWords}字\n2. 风格：真人感、口语化，像朋友聊天，不是营销号\n3. 可以带网络热词（如：${hotWords}等）\n4. 内容：\n   - 要有主观评价, 可以不说优点（锐评）\n   - 不要列车辆参数（马力、扭矩、零百等）\n   - 不要说"我去线下试驾了/实际体验过"，改成"我感觉/我看来/我觉得"\n5. 结构：\n   - 开头：简短引入（1-2句）\n   - 中间：对比两款车的感受（可以说A好在哪、B好在哪、或者A比B强在哪）\n   - 结尾：给购买建议（适合什么人买）\n6. 不需要加#话题标签\n【示例风格】\n"${example}"\n请根据以下标题生成文案：\n${titles}`;
         
         this.copyToClipboard(text, 7);
+    },
+
+    // 复制提示词模板8
+    copyPromptTemplate8() {
+        const count = this.getSlotValue('count8');
+        const price = this.getSlotValue('price8');
+        const energy = this.getSlotValue('energy8');
+        const body = this.getSlotValue('body8');
+        const minLen = this.getSlotValue('minlen8');
+        const maxLen = this.getSlotValue('maxlen8');
+        
+        const text = `你是一个小红书汽车内容创作者，擅长用真实主观感受写爆款标题。\n请帮我生成${count}个汽车类标题，要求：\n【填空参数】\n- 价格区间：${price}\n- 能源类型：${energy}\n- 车身类型：${body}\n【核心要求】\n1. 每个标题只涉及1款车型，不对比其他车型\n2. 表达个人主观看法，非配置罗列、非选买推荐、非专业测评\n3. 从用车场景（通勤/家用/自驾/停车）、预算范围、适用人群（单身/情侣/家庭/新手）任一角度出发\n4. 字数控制在${minLen}-${maxLen}字之间\n5. 情感可以是正面（喜爱/认可）或负面（吐槽/失望）任选其一，负面需暗示具体理由，不要正负面都写\n【禁止事项】\n- 禁止罗列参数（如轴距xxxmm、续航xxx公里、功率xxx匹）\n- 禁止使用专业导购话术（如"性价比之王"、"值得入手"、"同级标杆"）\n- 禁止出现#标签\n- 禁止出现「线下体验」、「提车」、「实测」、「试车」、「试驾」等关键词\n【风格参考】\n- "理想L7开了一个月，发现最大的问题是老婆不坐副驾了"\n- "卡罗拉双擎就是想要个不花哨的代步工具，别跟我谈智能化"\n- "20万买Model 3，毛坯房内饰看久了居然有点上瘾"\n- "比亚迪海鸥治好了我的停车焦虑"\n【输出格式】\n直接输出标题，每行一个，无需序号`;
+        
+        this.copyToClipboard(text, 8);
     },
 
     // 复制到剪贴板

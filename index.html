@@ -117,13 +117,18 @@
                     </div>
                     <div class="tool-card" onclick="toolManager.openPromptTemplate6()">
                         <div class="tool-icon">🆚</div>
-                        <h3>选车指南对比</h3>
+                        <h3>选车指南标题</h3>
                         <p>多车对比类标题生成</p>
                     </div>
                     <div class="tool-card" onclick="toolManager.openPromptTemplate7()">
                         <div class="tool-icon">✍️</div>
                         <h3>选车指南文案</h3>
                         <p>多车对比类文案生成</p>
+                    </div>
+                    <div class="tool-card" onclick="toolManager.openPromptTemplate8()">
+                        <div class="tool-icon">⭐</div>
+                        <h3>单车评价标题</h3>
+                        <p>单车主观评价类标题</p>
                     </div>
                 </div>
             </section>
@@ -472,11 +477,9 @@
                     <button class="close-btn" onclick="toolManager.closePromptTemplate1()">×</button>
                 </div>
                 <div class="prompt-form" style="padding: 20px;">
-                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">
-                        帮我在这个网站搜索下<span class="prompt-slot" data-slot="year" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">2026</span>年<span class="prompt-slot" data-slot="month" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">x</span>月<span class="prompt-slot" data-slot="day" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">x</span>日 <span class="prompt-slot" data-slot="event_type" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">比赛</span> <span class="prompt-slot" data-slot="location" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>站 <span class="prompt-slot" data-slot="schedule_type" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxx赛程</span>的<span class="prompt-slot" data-slot="info_type" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">成绩/比赛细节</span>, 根据结果给出<span class="prompt-slot" data-slot="count" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">x</span>个非常吸睛的短视频标题, 要求30字以内, 必须包含字段<span class="prompt-slot" data-slot="keyword" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>, 一定要多来源搜索并核实.
+                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">帮我在这个网站搜索下<span class="prompt-slot" data-slot="year" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">2026</span>年<span class="prompt-slot" data-slot="month" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">x</span>月<span class="prompt-slot" data-slot="day" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">x</span>日 <span class="prompt-slot" data-slot="event_type" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">比赛</span> <span class="prompt-slot" data-slot="location" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>站 <span class="prompt-slot" data-slot="schedule_type" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxx赛程</span>的<span class="prompt-slot" data-slot="info_type" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">成绩/比赛细节</span>, 根据结果给出<span class="prompt-slot" data-slot="count" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">x</span>个非常吸睛的短视频标题, 要求30字以内, 必须包含字段<span class="prompt-slot" data-slot="keyword" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>, 一定要多来源搜索并核实.
 参考网站: <span class="prompt-slot" data-slot="url" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none; word-break: break-all;">https://www.formula1.com/en/results/2026/races/1279/australia/practice/1</span>
-                        <button class="btn-primary" onclick="toolManager.copyPromptTemplate1()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
-                    </div>
+<button class="btn-primary" onclick="toolManager.copyPromptTemplate1()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button></div>
                 </div>
             </div>
         </div>
@@ -489,10 +492,8 @@
                     <button class="close-btn" onclick="toolManager.closePromptTemplate2()">×</button>
                 </div>
                 <div class="prompt-form" style="padding: 20px;">
-                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">
-                        帮我搜索下即将在<span class="prompt-slot" data-slot="year2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxxx</span>年<span class="prompt-slot" data-slot="month2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>月<span class="prompt-slot" data-slot="day2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>日开赛的<span class="prompt-slot" data-slot="event2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">赛事</span> <span class="prompt-slot" data-slot="schedule2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">赛程</span>站, 一定要二次核对赛事的准确信息, 并构思<span class="prompt-slot" data-slot="count2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">30</span>个非常吸睛的短视频标题, 可以从<span class="prompt-slot" data-slot="aspects2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxxx</span>等方面撰写. 每个标题字数小于30字, 且必须包含文字<span class="prompt-slot" data-slot="keyword2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxx</span>.
-                        <button class="btn-primary" onclick="toolManager.copyPromptTemplate2()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
-                    </div>
+                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">帮我搜索下即将在<span class="prompt-slot" data-slot="year2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxxx</span>年<span class="prompt-slot" data-slot="month2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>月<span class="prompt-slot" data-slot="day2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>日开赛的<span class="prompt-slot" data-slot="event2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">赛事</span> <span class="prompt-slot" data-slot="schedule2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">赛程</span>站, 一定要二次核对赛事的准确信息, 并构思<span class="prompt-slot" data-slot="count2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">30</span>个非常吸睛的短视频标题, 可以从<span class="prompt-slot" data-slot="aspects2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxxx</span>等方面撰写. 每个标题字数小于30字, 且必须包含文字<span class="prompt-slot" data-slot="keyword2" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxx</span>.
+<button class="btn-primary" onclick="toolManager.copyPromptTemplate2()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button></div>
                 </div>
             </div>
         </div>
@@ -505,10 +506,8 @@
                     <button class="close-btn" onclick="toolManager.closePromptTemplate3()">×</button>
                 </div>
                 <div class="prompt-form" style="padding: 20px;">
-                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">
-                        搜索下<span class="prompt-slot" data-slot="year3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxxx</span>年<span class="prompt-slot" data-slot="month3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>月<span class="prompt-slot" data-slot="day3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>日开赛的<span class="prompt-slot" data-slot="event3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">赛事</span> <span class="prompt-slot" data-slot="schedule3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">赛程</span>站, 帮我写一篇不少于 <span class="prompt-slot" data-slot="wordcount3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">字数</span> 字的短视频文案口播稿，要纯自然文字，不要序号或特殊符号。视频标题为<span class="prompt-slot" data-slot="title3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxx</span>，写下<span class="prompt-slot" data-slot="direction3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">内容方向</span>。文字要自然像人们正常说话介绍主题，用词不浮夸，有数据干货，一定要核实信息！只需要写口播文案, 不需要额外的配音和画面提示,  不要「当儿童组小车手在T18弯道超车时，他们或许正踩下中国赛车未来的第一脚油门」等空话，语言风格可以参考以下内容：<span class="prompt-slot" data-slot="style3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">文案模版</span>
-                        <button class="btn-primary" onclick="toolManager.copyPromptTemplate3()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
-                    </div>
+                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">搜索下<span class="prompt-slot" data-slot="year3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxxx</span>年<span class="prompt-slot" data-slot="month3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>月<span class="prompt-slot" data-slot="day3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xx</span>日开赛的<span class="prompt-slot" data-slot="event3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">赛事</span> <span class="prompt-slot" data-slot="schedule3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">赛程</span>站, 帮我写一篇不少于 <span class="prompt-slot" data-slot="wordcount3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">字数</span> 字的短视频文案口播稿，要纯自然文字，不要序号或特殊符号。视频标题为<span class="prompt-slot" data-slot="title3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">xxx</span>，写下<span class="prompt-slot" data-slot="direction3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">内容方向</span>。文字要自然像人们正常说话介绍主题，用词不浮夸，有数据干货，一定要核实信息！只需要写口播文案, 不需要额外的配音和画面提示,  不要「当儿童组小车手在T18弯道超车时，他们或许正踩下中国赛车未来的第一脚油门」等空话，语言风格可以参考以下内容：<span class="prompt-slot" data-slot="style3" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">文案模版</span>
+<button class="btn-primary" onclick="toolManager.copyPromptTemplate3()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button></div>
                 </div>
             </div>
         </div>
@@ -521,10 +520,8 @@
                     <button class="close-btn" onclick="toolManager.closePromptTemplate4()">×</button>
                 </div>
                 <div class="prompt-form" style="padding: 20px;">
-                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">
-                        帮我把下列跑山/越野线路改写为短视频标题, 可以是(某地)跑山/越野必打卡+线路名、(某地)经典线路+线路名、线路名+跑山/越野指南. 完全按我给你的顺序输出, 不需要加序号, 每行之间不需要空格. 每一个标题的前面如果有了(某地)名称, 写路线时就不需要再重复一次(某地)名, 同理路线两个字也是, 一个标题中不要重复出现, 每个标题字数小于30字, 以下是线路列表<span class="prompt-slot" data-slot="routes4" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">线路list</span>
-                        <button class="btn-primary" onclick="toolManager.copyPromptTemplate4()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
-                    </div>
+                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">帮我把下列跑山/越野线路改写为短视频标题, 可以是(某地)跑山/越野必打卡+线路名、(某地)经典线路+线路名、线路名+跑山/越野指南. 完全按我给你的顺序输出, 不需要加序号, 每行之间不需要空格. 每一个标题的前面如果有了(某地)名称, 写路线时就不需要再重复一次(某地)名, 同理路线两个字也是, 一个标题中不要重复出现, 每个标题字数小于30字, 以下是线路列表<span class="prompt-slot" data-slot="routes4" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">线路list</span>
+<button class="btn-primary" onclick="toolManager.copyPromptTemplate4()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button></div>
                 </div>
             </div>
         </div>
@@ -537,40 +534,42 @@
                     <button class="close-btn" onclick="toolManager.closePromptTemplate5()">×</button>
                 </div>
                 <div class="prompt-form" style="padding: 20px;">
-                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">
-                        帮我构思<span class="prompt-slot" data-slot="count5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">30</span>条吸睛又有悬念的短视频标题, 主要聚焦于<span class="prompt-slot" data-slot="theme5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">卡丁车</span>主题. 可以从<span class="prompt-slot" data-slot="aspects5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">山路驾驶安全规则、雨天 / 雾天山路行车注意事项、跑山前的车辆必备检查项</span>等多方面构思. 注意是<span class="prompt-slot" data-slot="type5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">汽车</span>, 不要涉及<span class="prompt-slot" data-slot="exclude5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">卡丁车</span>.
-                        <button class="btn-primary" onclick="toolManager.copyPromptTemplate5()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
-                    </div>
+                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">帮我构思<span class="prompt-slot" data-slot="count5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">30</span>条吸睛又有悬念的短视频标题, 主要聚焦于<span class="prompt-slot" data-slot="theme5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">卡丁车</span>主题. 可以从<span class="prompt-slot" data-slot="aspects5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">山路驾驶安全规则、雨天 / 雾天山路行车注意事项、跑山前的车辆必备检查项</span>等多方面构思. 注意是<span class="prompt-slot" data-slot="type5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">汽车</span>, 不要涉及<span class="prompt-slot" data-slot="exclude5" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">卡丁车</span>.
+<button class="btn-primary" onclick="toolManager.copyPromptTemplate5()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button></div>
                 </div>
             </div>
         </div>
 
-        <!-- 提示词模板6模态框 - 选车指南对比 -->
+        <!-- 提示词模板6模态框 - 选车指南标题 -->
         <div id="prompt-template6-modal" class="modal">
             <div class="modal-content modal-large">
                 <div class="modal-header">
-                    <h2>选车指南对比</h2>
+                    <h2>选车指南标题</h2>
                     <button class="close-btn" onclick="toolManager.closePromptTemplate6()">×</button>
                 </div>
                 <div class="prompt-form" style="padding: 20px;">
-                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">
-你是一个小红书汽车内容创作者，擅长写爆款标题。
-请帮我生成<span class="prompt-slot" data-slot="count6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">10</span>个汽车对比类标题，要求：
+                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">你是一个小红书汽车内容创作者，擅长写爆款标题。
+请帮我生成<span class="prompt-slot" data-slot="count6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">60</span>个汽车对比类标题，要求：
 【填空参数】
 - 价格区间：<span class="prompt-slot" data-slot="price6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">15-20万、20-30万、10万以下</span>
 - 能源类型：<span class="prompt-slot" data-slot="energy6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">纯电、混动、增程、纯油</span>
 - 车身类型：<span class="prompt-slot" data-slot="body6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">轿车、SUV、跑车</span>
-【标题要求】
-1. 每个标题对比<span class="prompt-slot" data-slot="compare6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">2款</span>同价格区间的车
-2. 标题要有钩子，能吸引点击（用疑问、悬念、冲突、对比等手法）
-3. 不要出现#标签、不要出现「线下体验」、「实测」、「试车」等关键词
-4. 标题长度控制在<span class="prompt-slot" data-slot="minlen6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">20</span>-<span class="prompt-slot" data-slot="maxlen6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">30</span>字之间
-5. 风格参考：
+【核心要求】
+- 每个标题对比<span class="prompt-slot" data-slot="compare6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">2</span>款同价格区间的车
+- 标题长度控制在<span class="prompt-slot" data-slot="minlen6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">15</span>-<span class="prompt-slot" data-slot="maxlen6" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">30</span>字之间
+- 标题要有钩子，能吸引点击（用疑问、悬念、冲突、对比等手法）
+【禁止事项】
+- 禁止罗列参数（如轴距xxxmm、续航xxx公里、功率xxx匹）
+- 禁止使用专业导购话术（如"性价比之王"、"值得入手"、"同级标杆"）
+- 禁止出现#标签
+- 禁止出现「线下体验」、「提车」、「实测」、「试车」、「试驾」、「买车」等关键词
+【风格参考】
    - "纠结党进！Model 3和极氪007怎么选？差价2万值不值"
-   - "同事买了小米SU7，我选了特斯拉Model 3，半年后谁后悔了"
+   - "同事说小米SU7，我觉得不及特斯拉Model 3"
    - "同样是20万预算，为什么有人选轿车有人选SUV"
-                        <button class="btn-primary" onclick="toolManager.copyPromptTemplate6()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
-                    </div>
+【输出格式】
+直接输出标题，每行一个，无需序号
+<button class="btn-primary" onclick="toolManager.copyPromptTemplate6()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button></div>
                 </div>
             </div>
         </div>
@@ -604,6 +603,45 @@
 请根据以下标题生成文案：
 <span class="prompt-slot" data-slot="titles7" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none; display: block; margin-top: 8px;">标题...</span>
                         <button class="btn-primary" onclick="toolManager.copyPromptTemplate7()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 提示词模板8模态框 - 单车评价标题 -->
+        <div id="prompt-template8-modal" class="modal">
+            <div class="modal-content modal-large">
+                <div class="modal-header">
+                    <h2>单车评价标题</h2>
+                    <button class="close-btn" onclick="toolManager.closePromptTemplate8()">×</button>
+                </div>
+                <div class="prompt-form" style="padding: 20px;">
+                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">
+你是一个小红书汽车内容创作者，擅长用真实主观感受写爆款标题。
+请帮我生成<span class="prompt-slot" data-slot="count8" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">10</span>个汽车类标题，要求：
+【填空参数】
+- 价格区间：<span class="prompt-slot" data-slot="price8" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">15-20万、20-30万、10万以下</span>
+- 能源类型：<span class="prompt-slot" data-slot="energy8" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">纯电、混动、增程、纯油</span>
+- 车身类型：<span class="prompt-slot" data-slot="body8" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">轿车、SUV、跑车</span>
+【核心要求】
+1. 每个标题只涉及1款车型，不对比其他车型
+2. 表达个人主观看法，非配置罗列、非选买推荐、非专业测评
+3. 从用车场景（通勤/家用/自驾/停车）、预算范围、适用人群（单身/情侣/家庭/新手）任一角度出发
+4. 字数控制在<span class="prompt-slot" data-slot="minlen8" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">15</span>-<span class="prompt-slot" data-slot="maxlen8" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">30</span>字之间
+5. 情感可以是正面（喜爱/认可）或负面（吐槽/失望）任选其一，负面需暗示具体理由，不要正负面都写
+【禁止事项】
+- 禁止罗列参数（如轴距xxxmm、续航xxx公里、功率xxx匹）
+- 禁止使用专业导购话术（如"性价比之王"、"值得入手"、"同级标杆"）
+- 禁止出现#标签
+- 禁止出现「线下体验」、「提车」、「实测」、「试车」、「试驾」等关键词
+【风格参考】
+- "理想L7开了一个月，发现最大的问题是老婆不坐副驾了"
+- "卡罗拉双擎就是想要个不花哨的代步工具，别跟我谈智能化"
+- "20万买Model 3，毛坯房内饰看久了居然有点上瘾"
+- "比亚迪海鸥治好了我的停车焦虑"
+【输出格式】
+直接输出标题，每行一个，无需序号
+                        <button class="btn-primary" onclick="toolManager.copyPromptTemplate8()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
                     </div>
                 </div>
             </div>
