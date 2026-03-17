@@ -130,6 +130,11 @@
                         <h3>单车评价标题</h3>
                         <p>单车主观评价类标题</p>
                     </div>
+                    <div class="tool-card" onclick="toolManager.openPromptTemplate9()">
+                        <div class="tool-icon">📝</div>
+                        <h3>单车评价文案</h3>
+                        <p>单车评价类文案生成</p>
+                    </div>
                 </div>
             </section>
         </main>
@@ -643,6 +648,35 @@
 直接输出标题，每行一个，无需序号
                         <button class="btn-primary" onclick="toolManager.copyPromptTemplate8()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 提示词模板9模态框 - 单车评价文案 -->
+        <div id="prompt-template9-modal" class="modal">
+            <div class="modal-content modal-large">
+                <div class="modal-header">
+                    <h2>单车评价文案</h2>
+                    <button class="close-btn" onclick="toolManager.closePromptTemplate9()">×</button>
+                </div>
+                <div class="prompt-form" style="padding: 20px;">
+                    <div class="prompt-preview" style="background: var(--bg-tertiary); padding: 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.8; font-size: 15px; white-space: pre-wrap;">你是一位小红书汽车博主，需要根据标题撰写<span class="prompt-slot" data-slot="minwords9" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">80</span>-<span class="prompt-slot" data-slot="maxwords9" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">100</span>字的汽车文案。
+【输入标题】：
+<span class="prompt-slot" data-slot="title9" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none; display: block; margin-top: 8px;">标题</span>
+【撰写要求】：
+1. 字数：<span class="prompt-slot" data-slot="minwords9b" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">80</span>-<span class="prompt-slot" data-slot="maxwords9b" contenteditable="true" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; outline: none;">100</span>字
+2. 结构：现象→分析→结论
+3. 必须有明确观点，不能中庸
+4. 禁止具体参数（用"两秒多"代替"2.78秒"）
+5. 使用主观表达（"我觉得"、"说实话"）
+6. 给出使用场景建议
+【可选模板】：
+- 支持型：肯定优点→建议
+- 吐槽型：表达期待→指出问题→建议
+- 分析型：提出问题→客观分析→适合人群
+【输出格式】：
+直接输出文案内容，无需解释, 每个标题的下一行对应一段文案
+<button class="btn-primary" onclick="toolManager.copyPromptTemplate9()" style="margin-top: 16px; width: 100%;">📋 复制完整提示词</button></div>
                 </div>
             </div>
         </div>

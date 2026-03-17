@@ -113,6 +113,20 @@ const toolManager = {
         this.resetPromptTemplate(8);
     },
 
+    // 打开提示词模板9
+    openPromptTemplate9() {
+        const modal = document.getElementById('prompt-template9-modal');
+        modal.classList.add('active');
+        this.setupSlotInputs(9);
+    },
+
+    // 关闭提示词模板9
+    closePromptTemplate9() {
+        const modal = document.getElementById('prompt-template9-modal');
+        modal.classList.remove('active');
+        this.resetPromptTemplate(9);
+    },
+
     // 设置输入框事件监听
     setupSlotInputs(templateNum) {
         const modal = document.getElementById(`prompt-template${templateNum}-modal`);
@@ -201,6 +215,10 @@ const toolManager = {
             8: {
                 'count8': '10', 'price8': '15-20万、20-30万、10万以下', 'energy8': '纯电、混动、增程、纯油',
                 'body8': '轿车、SUV、跑车', 'minlen8': '15', 'maxlen8': '30'
+            },
+            9: {
+                'minwords9': '80', 'maxwords9': '100', 'minwords9b': '80', 'maxwords9b': '100',
+                'title9': '标题'
             }
         };
         
@@ -331,6 +349,19 @@ const toolManager = {
         const text = `你是一个小红书汽车内容创作者，擅长用真实主观感受写爆款标题。\n请帮我生成${count}个汽车类标题，要求：\n【填空参数】\n- 价格区间：${price}\n- 能源类型：${energy}\n- 车身类型：${body}\n【核心要求】\n1. 每个标题只涉及1款车型，不对比其他车型\n2. 表达个人主观看法，非配置罗列、非选买推荐、非专业测评\n3. 从用车场景（通勤/家用/自驾/停车）、预算范围、适用人群（单身/情侣/家庭/新手）任一角度出发\n4. 字数控制在${minLen}-${maxLen}字之间\n5. 情感可以是正面（喜爱/认可）或负面（吐槽/失望）任选其一，负面需暗示具体理由，不要正负面都写\n【禁止事项】\n- 禁止罗列参数（如轴距xxxmm、续航xxx公里、功率xxx匹）\n- 禁止使用专业导购话术（如"性价比之王"、"值得入手"、"同级标杆"）\n- 禁止出现#标签\n- 禁止出现「线下体验」、「提车」、「实测」、「试车」、「试驾」等关键词\n【风格参考】\n- "理想L7开了一个月，发现最大的问题是老婆不坐副驾了"\n- "卡罗拉双擎就是想要个不花哨的代步工具，别跟我谈智能化"\n- "20万买Model 3，毛坯房内饰看久了居然有点上瘾"\n- "比亚迪海鸥治好了我的停车焦虑"\n【输出格式】\n直接输出标题，每行一个，无需序号`;
         
         this.copyToClipboard(text, 8);
+    },
+
+    // 复制提示词模板9
+    copyPromptTemplate9() {
+        const minWords = this.getSlotValue('minwords9');
+        const maxWords = this.getSlotValue('maxwords9');
+        const minWordsB = this.getSlotValue('minwords9b');
+        const maxWordsB = this.getSlotValue('maxwords9b');
+        const title = this.getSlotValue('title9');
+        
+        const text = `你是一位小红书汽车博主，需要根据标题撰写${minWords}-${maxWords}字的汽车文案。\n【输入标题】：\n${title}\n【撰写要求】：\n1. 字数：${minWordsB}-${maxWordsB}字\n2. 结构：现象→分析→结论\n3. 必须有明确观点，不能中庸\n4. 禁止具体参数（用"两秒多"代替"2.78秒"）\n5. 使用主观表达（"我觉得"、"说实话"）\n6. 给出使用场景建议\n【可选模板】：\n- 支持型：肯定优点→建议\n- 吐槽型：表达期待→指出问题→建议\n- 分析型：提出问题→客观分析→适合人群\n【输出格式】：\n直接输出文案内容，无需解释, 每个标题的下一行对应一段文案`;
+        
+        this.copyToClipboard(text, 9);
     },
 
     // 复制到剪贴板
